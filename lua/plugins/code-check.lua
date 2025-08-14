@@ -1,11 +1,14 @@
--- selene: allow(mixed_table)
+-- selencopeFuzzyCommandSearch): allow(mixed_table)
 return {
   {
     "mfussenegger/nvim-lint",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       { "williamboman/mason.nvim", config = true },
-      { "rshkarin/mason-nvim-lint", config = true },
+      {
+        "rshkarin/mason-nvim-lint",
+        opts = { quiet_mode = true },
+      },
     },
     config = function()
       local check_spelling = true
@@ -38,19 +41,17 @@ return {
 
       require("lint").linters_by_ft = {
         javascript = { "eslint_d" },
-        typescript = { "biomejs" },
+        typescript = { "eslint_d" },
         javascriptreact = { "eslint_d" },
         typescriptreact = { "eslint_d" },
         html = { "eslint_d" },
 
         lua = { "selene" },
 
-        nix = { "statix" },
-
         python = { "flake8" },
 
-        cpp = { "cppcheck" },
-        c = { "cppcheck" },
+        cpp = { "cpplint" },
+        c = { "cpplint" },
 
         go = { "golangcilint" },
 
@@ -89,9 +90,10 @@ return {
       formatters_by_ft = {
         javascript = { "eslint_d", "prettierd", "prettier", stop_after_first = true },
         typescript = {
-          "biome",
-          "biome-organize-imports",
-          -- "eslint_d", "prettierd", "prettier", stop_after_first = true
+          "eslint_d",
+          "prettierd",
+          "prettier",
+          stop_after_first = true,
         },
         javascriptreact = { "eslint_d", "prettierd", "prettier", stop_after_first = true },
         typescriptreact = { "eslint_d", "prettierd", "prettier", stop_after_first = true },

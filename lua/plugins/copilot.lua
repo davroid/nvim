@@ -5,7 +5,7 @@ local dismiss = "<C-}>"
 return {
   {
     "zbirenbaum/copilot.lua",
-    enabled = true,
+    enabled = false,
     event = "InsertEnter",
     cmd = "Copilot",
     build = ":Copilot auth",

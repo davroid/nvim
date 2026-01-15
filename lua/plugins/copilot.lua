@@ -24,7 +24,7 @@ return {
 
   {
     "supermaven-inc/supermaven-nvim",
-    enabled = false,
+    enabled = true,
     event = "InsertEnter",
     opts = {
       {
@@ -33,6 +33,21 @@ return {
           clear_suggestion = dismiss,
           accept_word = accept_word,
         },
+      },
+    },
+  },
+
+  {
+    "greggh/claude-code.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    opts = {
+      window = {
+        position = "vertical",
+      },
+      git = {
+        use_git_root = false,
       },
     },
   },

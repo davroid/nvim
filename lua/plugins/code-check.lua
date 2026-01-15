@@ -17,27 +17,29 @@ return {
         callback = function()
           require("lint").try_lint()
 
-          if check_spelling then
-            require("lint").try_lint "cspell"
-          end
+          -- if check_spelling then
+          --   require("lint").try_lint "cspell"
+          -- end
         end,
       })
 
-      vim.keymap.set("n", "<leader>sp", function()
-        require("lint").try_lint "cspell"
-      end, { desc = "Check spelling on the current buffer" })
+      -- INFO: Disable cspell linting to test cspell_ls
 
-      vim.keymap.set("n", "<leader>ts", function()
-        check_spelling = not check_spelling
-
-        if not check_spelling then
-          vim.diagnostic.reset()
-        end
-
-        local msg = "Spell checking " .. (check_spelling and "ON" or "OFF")
-
-        vim.notify(msg, vim.log.levels.INFO)
-      end, { desc = "Toggle spelling" })
+      -- vim.keymap.set("n", "<leader>sp", function()
+      --   require("lint").try_lint "cspell"
+      -- end, { desc = "Check spelling on the current buffer" })
+      --
+      -- vim.keymap.set("n", "<leader>ts", function()
+      --   check_spelling = not check_spelling
+      --
+      --   if not check_spelling then
+      --     vim.diagnostic.reset()
+      --   end
+      --
+      --   local msg = "Spell checking " .. (check_spelling and "ON" or "OFF")
+      --
+      --   vim.notify(msg, vim.log.levels.INFO)
+      -- end, { desc = "Toggle spelling" })
 
       require("lint").linters_by_ft = {
         javascript = { "eslint_d" },
@@ -115,6 +117,8 @@ return {
         rust = { "rustfmt" },
 
         sh = { "beautysh" },
+
+        sql = { "sleek" },
       },
     },
   },

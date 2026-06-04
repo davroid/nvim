@@ -23,6 +23,10 @@ return {
 
       { "williamboman/mason-lspconfig.nvim" },
 
+      "WhoIsSethDaniel/mason-tool-installer.nvim",
+
+      { "j-hui/fidget.nvim", opts = {} },
+
       { "hrsh7th/cmp-nvim-lsp", enabled = false },
 
       { "saghen/blink.cmp" },
@@ -45,16 +49,38 @@ return {
     opts = function()
       local nvim_lsp = require "lspconfig"
 
+      local vue_language_server_path = vim.fn.stdpath "data"
+        .. "/mason/packages/vue-language-server/node_modules/@vue/language-server"
+
       return {
         servers = {
-          ts_ls = {
-            root_dir = nvim_lsp.util.root_pattern "package.json",
-            single_file_support = false,
+          vtsls = {
+            filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+            settings = {
+              vtsls = {
+                tsserver = {
+                  globalPlugins = {
+                    {
+                      name = "@vue/typescript-plugin",
+                      location = vue_language_server_path,
+                      languages = { "vue" },
+                      configNamespace = "typescript",
+                    },
+                  },
+                },
+              },
+              typescript = {
+                suggest = { completeFunctionCalls = true },
+                updateImportsOnFileMove = { enabled = "always" },
+                inlayHints = { parameterTypes = { enabled = true } },
+              },
+            },
           },
           denols = {
             root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
           },
           angularls = {},
+          vue_ls = {},
           astro = {},
           html = {},
           cssls = {},
@@ -149,18 +175,16 @@ return {
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 
-      require("mason-lspconfig").setup {
-        ensure_installed = vim.tbl_keys(opts.servers),
+      local ensure_installed = vim.tbl_keys(opts.servers or {})
 
-        handlers = {
-          function(server_name)
-            local server = opts.servers[server_name] or {}
-            server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+      require("mason-tool-installer").setup { ensure_installed = ensure_installed }
+      require("mason-lspconfig").setup { automatic_enable = ensure_installed }
 
-            require("lspconfig")[server_name].setup(server)
-          end,
-        },
-      }
+      for server_name, server in pairs(opts.servers or {}) do
+        server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+
+        vim.lsp.config(server_name, server)
+      end
     end,
   },
 }

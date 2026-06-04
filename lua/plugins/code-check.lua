@@ -46,6 +46,7 @@ return {
         typescript = { "eslint_d" },
         javascriptreact = { "eslint_d" },
         typescriptreact = { "eslint_d" },
+        vue = { "eslint_d", "oxlint" },
         html = { "eslint_d" },
 
         lua = { "selene" },
@@ -99,6 +100,9 @@ return {
         },
         javascriptreact = { "eslint_d", "prettierd", "prettier", stop_after_first = true },
         typescriptreact = { "eslint_d", "prettierd", "prettier", stop_after_first = true },
+
+        vue = { "eslint_d", "oxlint", "prettierd", "prettier", stop_after_first = true },
+
         html = { "prettierd", "prettier", stop_after_first = true },
 
         nix = { "nixpkgs_fmt" },

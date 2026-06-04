@@ -9,26 +9,26 @@ return {
     event = { "BufReadPost", "BufNewFile" },
   },
 
-  {
-    "m4xshen/hardtime.nvim",
-    event = { "BufReadPost", "BufNewFile" },
-    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-    opts = {
-      disable_mouse = false,
-      disabled_filetypes = {
-        "dapui_scopes",
-        "dapui_breakpoints",
-        "dapui_console",
-        "dapui_stacks",
-        "dapui_watches",
-        "dapui_repl",
-        "dap-float",
-        "FTerm",
-        "netrw",
-        "mason",
-      },
-    },
-  },
+  -- {
+  --   "m4xshen/hardtime.nvim",
+  --   event = { "BufReadPost", "BufNewFile" },
+  --   dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+  --   opts = {
+  --     disable_mouse = false,
+  --     disabled_filetypes = {
+  --       "dapui_scopes",
+  --       "dapui_breakpoints",
+  --       "dapui_console",
+  --       "dapui_stacks",
+  --       "dapui_watches",
+  --       "dapui_repl",
+  --       "dap-float",
+  --       "FTerm",
+  --       "netrw",
+  --       "mason",
+  --     },
+  --   },
+  -- },
 
   {
     "echasnovski/mini.move",
